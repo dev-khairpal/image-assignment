@@ -15,3 +15,7 @@ A React application that allows users to upload images and perform basic image o
    ```bash
    npm install
    ```
+   ![alt text](./screenshots//1.png)
+   ![alt text](./screenshots/2.png)
+   ![alt text](./screenshots//4.png)
+  
