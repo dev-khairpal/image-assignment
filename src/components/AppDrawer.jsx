@@ -7,11 +7,28 @@ import { TbFlipHorizontal } from "react-icons/tb";
 import { TbFlipVertical } from "react-icons/tb";
 import { useState } from "react";
 
+
 const AppDrawer = ({ open, onClose, image }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [rotation, setRotation] = useState(0);
+  const [flipped, setFlipped] = useState(false);
 
   const handleDrawer = () => {
     setOpenDrawer(!openDrawer);
+  };
+
+  const handleRotate = () => {
+    setRotation((rotation + 90) % 360);
+  };
+
+  const handleFlipHorizontal = () => {
+    setFlipped(!flipped);
+  };
+
+  const handleFlipVertical = () => {
+    setFlipped(!flipped);
   };
 
   return (
@@ -35,6 +52,7 @@ const AppDrawer = ({ open, onClose, image }) => {
                 src={image}
                 alt="Uploaded"
                 className="w-full max-h-[calc(100vh-64px)] object-contain"
+                style={{ transform: `rotate(${rotation}deg) ${flipped ? 'scaleX(-1)' : ''}` }}
               />
               <div className="absolute top-14 right-2 font-semibold opacity-65 rounded-md bg-black text-white cursor-pointer">
                 <div onClick={handleDrawer} className="p-2">
@@ -42,16 +60,16 @@ const AppDrawer = ({ open, onClose, image }) => {
                 </div>
                 {openDrawer && (
                   <div className="mt-2 text-white gap-2 mb-2 flex flex-col items-center">
-                    <p>
+                    <p onClick={handleRotate}>
                       <FaArrowRotateRight />
                     </p>
                     <p>
                       <FaCropSimple />
                     </p>
-                    <p>
+                    <p onClick={handleFlipHorizontal}>
                       <TbFlipHorizontal />
                     </p>
-                    <p>
+                    <p onClick={handleFlipVertical}>
                       <TbFlipVertical />
                     </p>
                   </div>
@@ -78,6 +96,8 @@ const AppDrawer = ({ open, onClose, image }) => {
             type="text"
             placeholder="Name"
             className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
           />
 
           {/* text area */}
@@ -85,6 +105,8 @@ const AppDrawer = ({ open, onClose, image }) => {
             placeholder="Description"
             rows="5"
             className="w-full p-2 border border-gray-300 rounded-lg mb-4 resize-none"
+            value={description}
+            onChange={(e)=>setDescription(e.target.value)}
           ></textarea>
 
           {/*upload button */}
